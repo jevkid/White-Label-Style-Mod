@@ -1,0 +1,100 @@
+/*********
+* Colors *
+**********/
+
+@brand-primary: #253640;
+@brand-secondary: #CAAEAA;
+@brand-tertiary: #FEC0B1;
+
+@black: #000000;
+@white: #FFFFFF;
+
+@light-grey: #D3D3D3;
+@grey: #808080;
+@dark-grey: #696969;
+
+@body: #333333;
+
+/*******************
+* Fonts and Sizing *
+********************/
+
+@brand-font: "HelveticaNeue", "Helvetica", "Arial", sans-serif;
+
+.h1-mixin(@color) {
+	font-size: 2em;
+	color: @color !important;
+}
+
+.h2-mixin(@color) {
+	font-size: 1.5em;
+	color: @color !important;
+}
+
+.h3-mixin(@color) {
+	font-size: 1.17em;
+	color: @color !important;
+}
+
+.h4-mixin(@color) {
+	font-size: 1em;
+	color: @color !important;
+}
+
+/**********
+* Buttons *
+***********/
+
+/*********
+* Inputs *
+**********/
+
+/*********
+* Panels *
+**********/
+
+/*********
+* Styles *
+**********/
+
+h1 {
+	.h1-mixin(@brand-primary);
+}
+
+h2 {
+	.h2-mixin(@brand-secondary);
+}
+
+h3 {
+	.h3-mixin(@brand-tertiary);
+}
+
+h4 {
+	.h4-mixin(@black);
+}
+
+body {
+	font-family: @brand-font;
+	color: @body;
+}
+
+button {
+	color: @white;
+	background-color: @brand-secondary;
+	border: 1px solid @brand-tertiary;
+	border-radius: 4px;
+	font-size: 0.5em;
+}
+
+input {
+
+}
+
+select {
+
+}
+
+.panel {
+
+}
+
