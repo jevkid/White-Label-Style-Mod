@@ -2,9 +2,9 @@
 * Colors *
 **********/
 
-@brand-primary: #253640;
-@brand-secondary: #CAAEAA;
-@brand-tertiary: #FEC0B1;
+@brand-primary: #0B3948;
+@brand-secondary: #416165;
+@brand-tertiary: #ACB0BD;
 
 @black: #000000;
 @white: #FFFFFF;
@@ -40,10 +40,153 @@
 	font-size: 1em;
 	color: @color !important;
 }
+/*************
+* Animations *
+**************/
+
+// Center - out
+.animation-1(@hover-color, @hover-background){
+	&:hover {
+		cursor: pointer;
+		color: @hover-color;
+		background-color: @hover-background;
+		&:after {
+			width: 100%;
+			left: 0;
+		}
+	}
+}
+
+// Left - right
+.animation-2(@hover-color, @hover-background){
+	&:hover {
+		cursor: pointer;
+		color: @hover-color;
+		background-color: @hover-background;
+		&:after {
+			width: 100%;
+			left: 0;
+		}
+	}
+	&:after {
+		left: 0;
+	}
+}
+
+// Left - right, stays
+.animation-3(@hover-color, @hover-background){
+	&:hover {
+		cursor: pointer;
+		color: @hover-color;
+		background-color: @hover-background;
+		&:after {
+			width: 100%;
+			left: 0;
+		}
+	}
+	&:after {
+		right: 0;
+    left: auto;
+	}
+}
+
+// Up - down, shiny
+.animation-4(@hover-color, @hover-background){
+	&:hover {
+		cursor: pointer;
+		color: @hover-color;
+		background-color: @hover-background;
+		&:after {
+			width: 100%;
+			left: 0;
+			top: calc(100% - 3px);
+		}
+	}
+	&:after {
+		left: 0;
+    bottom: auto;
+    top: -3px;
+    width: 100%;
+	}
+}
+
+// Basic transition
+.animation-5(@hover-color, @hover-background){
+	&:hover {
+		cursor: pointer;
+		color: @hover-color;
+		background-color: @hover-background;
+		&:after {
+			left: -10%;
+      width: 120%;
+		}
+	}
+	&:after {
+		left: 0;
+    bottom: auto;
+    height: 120%;
+    left: -10%;
+    transform: skewX(15deg);
+    z-index: -1;
+	}
+}
 
 /**********
 * Buttons *
 ***********/
+.button(@color, @background, @border, @radius, @font-size, @padding, @margin) {
+	color: @color;
+	background-color: @background;
+	border: @border;
+	border-radius: @radius;
+	font-size: @font-size;
+	-webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  margin: @margin;
+  padding: @padding;
+  text-align: center;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  -webkit-transition: .3s;
+  transition: .3s;	
+  &:after {
+    position: absolute;
+    transition: .3s;
+    content: '';
+    width: 0;
+    left: 50%;
+    bottom: 0;
+    height: 3px;
+    background: #f7f7f7;
+  }
+}
+.button-primary {
+	.button(@white, @brand-secondary, 1px solid @brand-secondary, 4px, 0.75em, 20px, 10px);
+	.animation-1(@brand-secondary, @white);
+}
+
+.button-secondary {
+	.button(@white, @brand-primary, 1px solid @brand-primary, 4px, 0.75em, 20px, 10px);
+	.animation-2(@brand-secondary, @white);
+}
+
+.button-clear {
+	.button(@brand-secondary, @white, 1px solid @brand-primary, 4px, 0.75em, 10px 15px, 10px);
+	.animation-3(@white, @brand-secondary);
+}
+
+.button-small {
+	.button(@white, @brand-secondary, 1px solid @brand-secondary, 4px, 0.5em, 10px, 10px);
+	.animation-4(@brand-secondary, @white);
+}
+
+.button-x-small {
+	.button(@white, @brand-secondary, 1px solid @brand-secondary, 4px, 0.5em, 5px, 10px);
+	.animation-5(@brand-secondary, @white);
+}
+
 
 /*********
 * Inputs *
@@ -76,14 +219,6 @@ h4 {
 body {
 	font-family: @brand-font;
 	color: @body;
-}
-
-button {
-	color: @white;
-	background-color: @brand-secondary;
-	border: 1px solid @brand-tertiary;
-	border-radius: 4px;
-	font-size: 0.5em;
 }
 
 input {

@@ -7,8 +7,12 @@ import ButtonStyle from './components/ButtonStyle';
 
 ReactDOM.render(
 	<div className="container">
-	  <Header titleText="BRAND NAME" />
-	  <ButtonStyle buttonText="Submit" buttonType="primary"/>
+	 	<Header brandName="BRAND NAME" />
+		<ButtonStyle buttonText="Submit" buttonType="primary" />
+		<ButtonStyle buttonText="Search" buttonType="secondary" />
+		<ButtonStyle buttonText="Reset" buttonType="clear" />
+		<ButtonStyle buttonText="Select" buttonType="small" />
+		<ButtonStyle buttonText="Go" buttonType="x-small" />
 	</div>,
   document.querySelectorAll('#rootElement')[0]
 );

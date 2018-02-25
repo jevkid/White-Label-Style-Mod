@@ -1,29 +1,45 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var BUILD_DIR = path.resolve(__dirname, 'src/public/');
-var APP_DIR = path.resolve(__dirname, 'src/app/');
-var CSS_DIR = path.resolve(__dirname, 'src/app/styles/');
+const paths = {
+  BUILD_DIR: path.resolve(__dirname, 'src/public/'),
+  APP_DIR: path.resolve(__dirname, 'src/app/'),
+  CSS_DIR: path.resolve(__dirname, 'src/app/styles/')
+};
 
-var config = [
+const config = [
   {
-    entry: APP_DIR + '/index.jsx',
+    entry: path.join(paths.APP_DIR, 'index.jsx'),
     output: {
-      path: BUILD_DIR,
-      filename: 'js/bundle.js'
+      path: paths.BUILD_DIR,
+      filename: 'bundle.js'
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: path.join(paths.BUILD_DIR, 'index.html'),
+      }),
+    ],
+    devServer: {
+      contentBase: paths.APP_DIR,
     },
     module : {
       loaders : [
         {
           test : /\.jsx?/,
-          include : APP_DIR,
-          loader : 'babel-loader'
+          include : paths.APP_DIR,
+          loaders: "babel-loader"
         },
         {
           test: /\.less$/,
-          include : APP_DIR,
+          include : paths.APP_DIR,
           loader: "style-loader!css-loader!less-loader"
-        }
+        },
+        {
+          test: /\.(png|jpg|gif)$/,
+          include : paths.APP_DIR,
+          loaders: "file-loader",
+        },
       ],
     }
   }
