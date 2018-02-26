@@ -9,9 +9,11 @@
 @black: #000000;
 @white: #FFFFFF;
 
-@light-grey: #D3D3D3;
-@grey: #808080;
-@dark-grey: #696969;
+@lightest-grey: #F9F9F9;
+@light-grey: #e3e3e3;
+@grey: #e5e5e5;
+@dark-grey:#b9b9b9;
+
 
 @body: #333333;
 
@@ -131,6 +133,10 @@
 	}
 }
 
+.transition(@speed, @easing) {
+  transition: all @speed @easing;  
+}
+
 /**********
 * Buttons *
 ***********/
@@ -192,9 +198,97 @@
 * Inputs *
 **********/
 
+.form-field {
+  width: 100%;
+  padding: 1em;
+  line-height: 1.4;
+  background-color: @lightest-grey;
+  border: 1px solid @grey;
+  border-radius: 3px;
+  .transition(0.35s, ease-in-out);
+  &:focus {
+    outline: 0;
+    border-color: @brand-primary;
+  }
+  &[type="radio"] {
+    display: none;
+    & + label {
+      &:extend(input);
+      display: inline-block;
+      width: 50%;
+      text-align: center;
+      float: left;
+      border-radius: 0;
+      &:first-of-type {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+      }
+      &:last-of-type {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+      }
+      i {
+        padding-right: 0.4em;
+      }
+    }
+    &:checked + label {
+      background-color: @brand-primary;
+      color: @white;
+      border-color: @brand-primary;
+    }
+  }
+  &[type="checkbox"] {
+    display: none;
+    & + label {
+      position: relative;
+      display: block;
+      padding-left: 1.6em;
+      &:before {
+        position: absolute;
+        top: 0.2em;
+        left: 0;
+        display: block;
+        width: 1em;
+        height: 1em;
+        padding: 0;
+        content: "";
+      }
+      &:after {
+        position: absolute;
+        top: 0.45em;
+        left: 0.2em;
+        font-size: 0.8em;
+        color: @white;
+        opacity: 0;
+      }
+    }
+  }
+  &:checked + label {
+    &:before {
+      &:extend(input[type="radio"]:checked + label);
+    }
+    &:after {
+      opacity: 1;
+    }
+  }
+ 
+}
+
+.radio {
+
+}
+
+.checkbox {
+
+}
+
 /*********
 * Panels *
 **********/
+
+.panel {
+
+}
 
 /*********
 * Styles *
@@ -221,15 +315,9 @@ body {
 	color: @body;
 }
 
-input {
-
-}
-
 select {
 
 }
 
-.panel {
 
-}
 

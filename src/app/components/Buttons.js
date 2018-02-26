@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class ButtonStyle extends Component {
+class Button extends Component {
   render() {
     return (
       <button className={"button-" + this.props.buttonType}>{this.props.buttonText}</button>
@@ -8,4 +8,4 @@ class ButtonStyle extends Component {
   }
 };
 
-export default ButtonStyle;
+export default Button;
