@@ -12,7 +12,7 @@
 @lightest-grey: #F9F9F9;
 @light-grey: #e3e3e3;
 @grey: #e5e5e5;
-@dark-grey:#b9b9b9;
+@dark-grey:#999999;
 
 
 @body: #333333;
@@ -23,25 +23,31 @@
 
 @brand-font: "HelveticaNeue", "Helvetica", "Arial", sans-serif;
 
-.h1-mixin(@color) {
-	font-size: 2em;
-	color: @color !important;
+h1 {
+  font-size: 2em;
+  color: @brand-primary !important;
 }
 
-.h2-mixin(@color) {
-	font-size: 1.5em;
-	color: @color !important;
+h2 {
+  font-size: 1.5em;
+  color: @brand-secondary !important;
 }
 
-.h3-mixin(@color) {
-	font-size: 1.17em;
-	color: @color !important;
+h3 {
+  font-size: 1.17em;
+  color: @brand-tertiary !important;
 }
 
-.h4-mixin(@color) {
-	font-size: 1em;
-	color: @color !important;
+h4 {
+  font-size: 1em;
+  color: @black !important;
 }
+
+body {
+  font-family: @brand-font;
+  color: @body;
+}
+
 /*************
 * Animations *
 **************/
@@ -134,7 +140,8 @@
 }
 
 .transition(@speed, @easing) {
-  transition: all @speed @easing;  
+  -webkit-transition: all @speed @easing;
+  transition: all @speed @easing;
 }
 
 /**********
@@ -147,8 +154,8 @@
 	border-radius: @radius;
 	font-size: @font-size;
 	-webkit-box-flex: 1;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
   margin: @margin;
   padding: @padding;
   text-align: center;
@@ -193,93 +200,140 @@
 	.animation-5(@brand-secondary, @white);
 }
 
-
 /*********
 * Inputs *
 **********/
 
-.form-field {
-  width: 100%;
-  padding: 1em;
-  line-height: 1.4;
+// Text input mixin
+.form-input(@width, @padding, @line-height, @font-size){
   background-color: @lightest-grey;
   border: 1px solid @grey;
   border-radius: 3px;
+  text-align: left;
+
   .transition(0.35s, ease-in-out);
+
+  width: @width;
+  padding: @padding;
+  line-height: @line-height;
+  font-size: @font-size;
+  
   &:focus {
     outline: 0;
     border-color: @brand-primary;
   }
-  &[type="radio"] {
-    display: none;
-    & + label {
-      &:extend(input);
-      display: inline-block;
-      width: 50%;
-      text-align: center;
-      float: left;
-      border-radius: 0;
-      &:first-of-type {
-        border-top-left-radius: 3px;
-        border-bottom-left-radius: 3px;
-      }
-      &:last-of-type {
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-      }
-      i {
-        padding-right: 0.4em;
-      }
+
+}
+
+.form-group {
+  label {
+    font-weight: 600;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .form-field-standard {
+    .form-input(100px, 0.40em 0.70em, 1.4, 100%);
+  }
+    
+  .form-field-small {
+    .form-input(75px, 0.40em 0.20em, 1.2, 80%);
+  }
+
+}
+
+// Radio and checkbox mixin
+.check-radio-input(@radius, @content, @font-size, @bottom){
+  input {
+    margin: 0 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    top: 5px;
+    height: 20px;
+    width: 20px;
+    transition: all 0.15s ease-out 0s;
+    background: @white;
+    border: 1px solid @brand-secondary;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    outline: none;
+    border-radius: @radius;
+    
+    &:hover {
+      background: @brand-primary;
     }
-    &:checked + label {
-      background-color: @brand-primary;
+    
+    &:checked {
+      background: @brand-secondary;
+      color: @white !important;
+    }
+    
+    &:checked::before {
+      height: 20px;
+      width: 20px;
+      position: absolute;    
+      content: @content;
       color: @white;
-      border-color: @brand-primary;
+      display: inline-block;
+      font-size: @font-size;
+      bottom: @bottom;
+      right: -1px;
+      text-align: center;
     }
-  }
-  &[type="checkbox"] {
-    display: none;
-    & + label {
-      position: relative;
+    
+    &:checked::after {
+      -webkit-animation: click-wave 0.65s;
+      -moz-animation: click-wave 0.65s;
+      animation: click-wave 0.65s;
+      background:@brand-secondary;
+      content: '';
       display: block;
-      padding-left: 1.6em;
-      &:before {
-        position: absolute;
-        top: 0.2em;
-        left: 0;
-        display: block;
-        width: 1em;
-        height: 1em;
-        padding: 0;
-        content: "";
-      }
-      &:after {
-        position: absolute;
-        top: 0.45em;
-        left: 0.2em;
-        font-size: 0.8em;
-        color: @white;
-        opacity: 0;
-      }
+      position: relative;
+      z-index: 100;
     }
-  }
-  &:checked + label {
-    &:before {
-      &:extend(input[type="radio"]:checked + label);
-    }
-    &:after {
-      opacity: 1;
-    }
-  }
- 
-}
 
-.radio {
+  }
 
 }
 
-.checkbox {
+.radio-group {
+  .check-radio-input(50%, '\2022', 1.25em, 5.5px);
+}
 
+.checkbox-group {
+  .check-radio-input(20%, '\2713', 1em, 2.5px);  
+}
+
+.select-input(@padding, @font-size){
+  padding: @padding;
+  color: @body;
+  border: 1px solid @light-grey;
+  border-radius: 4px;
+  text-align: left;
+  font-size: @font-size;
+  background-image: none;
+  background-color: @white;
+}
+
+.select-group {
+  label {
+    font-weight: 600;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
+  .select-standard {
+    .select-input(6px 12px, 14px);
+  }
+    
+  .select-small {
+    .select-input(6px 12px, 14px);
+  }
 }
 
 /*********
@@ -288,31 +342,6 @@
 
 .panel {
 
-}
-
-/*********
-* Styles *
-**********/
-
-h1 {
-	.h1-mixin(@brand-primary);
-}
-
-h2 {
-	.h2-mixin(@brand-secondary);
-}
-
-h3 {
-	.h3-mixin(@brand-tertiary);
-}
-
-h4 {
-	.h4-mixin(@black);
-}
-
-body {
-	font-family: @brand-font;
-	color: @body;
 }
 
 select {
