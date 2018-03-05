@@ -4,17 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const paths = {
   BUILD_DIR: path.resolve(__dirname, 'src/public/'),
-  APP_DIR: path.resolve(__dirname, 'src/app/'),
+  APP_DIR: path.resolve(__dirname, 'src/'),
   CSS_DIR: path.resolve(__dirname, 'src/app/styles/')
 };
 
 const config = [
   {
-    entry: path.join(paths.APP_DIR, 'index.jsx'),
-    output: {
-      path: paths.BUILD_DIR,
-      filename: 'bundle.js'
-    },
+    entry: path.join(paths.APP_DIR, 'App.js'),
     plugins: [
       new HtmlWebpackPlugin({
         template: path.join(paths.BUILD_DIR, 'index.html'),

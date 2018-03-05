@@ -1,13 +1,19 @@
 {
-  "name": "White-Label-Style-Mod",
+  "name": "Finance-Dashboard",
   "version": "0.0.1",
-  "description": "Modifier for testing white-labelled styles",
+  "description": "Simple dshboard for analysing spending",
   "main": "index.js",
   "dependencies": {
     "babel-polyfill": "^6.0.16",
     "react": "^15.6.2",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^15.6.2",
-    "react-router": "^4.2.0"
+    "react-redux": "^5.0.7",
+    "react-router": "^3.2.0",
+    "react-router-bootstrap": "^0.23.3",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -26,21 +32,21 @@
     "less-loader": "^2.2.0",
     "node-libs-browser": "^0.5.2",
     "style-loader": "^0.12.3",
-    "webpack": "^3.11.0",
+    "webpack": "^2.7.0",
     "webpack-dev-server": "^2.11.1"
   },
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server --port 3000"
+    "dev": "webpack-dev-server --port 8080"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jevkid/White-Label-Style-Mod.git"
+    "url": "git+https://github.com/jevkid/Finance-Dashboard.git"
   },
   "author": "Megan Jevin",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/jevkid/White-Label-Style-Mod/issues"
+    "url": "https://github.com/jevkid/Finance-Dashboard/issues"
   },
-  "homepage": "https://github.com/jevkid/White-Label-Style-Mod#readme"
+  "homepage": "https://github.com/jevkid/Finance-Dashboard#readme"
 }
