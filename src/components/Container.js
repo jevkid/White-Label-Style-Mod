@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { transactionFetchData } from '../actions/transaction';
+
+
 import Chart from './Chart';
 import Table from './Table';
 import Header from './Header';
@@ -8,39 +12,16 @@ import '../styles/main.less';
 
 class Container extends Component {
 	
-	constructor(props) {
-    super(props);
-
-    this.state = {
-      transactions: [],
-      isLoading: false,
-      error: null
-    };
-  }
-
-  componentDidMount() {
-  	this.setState({ isLoading: true });
-
-    fetch('http://localhost:3000/transactions')
-      .then(response => {
-      	if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong ...');
-        }
-      })
-      .then(data => this.setState({ transactions: data, isLoading: false }))
-      .catch(error => this.setState({ error, isLoading: false }));
+	componentDidMount() {
+    this.props.fetchData('http://localhost:3000/transactions');
   }
 
   render() {
-  	const { transactions, isLoading, error } = this.state;
-
-    if (error) {
-      return <p>{error.message}</p>;
+  	if (this.props.hasErrored) {
+      return <p>Sorry! There was an error loading transactions</p>;
     }
 
-    if (isLoading || transactions.length <= 0) {
+    if (this.props.isLoading || this.props.transactions.length <= 0) {
       return <p>Loading ...</p>;
     }
     
@@ -51,7 +32,7 @@ class Container extends Component {
        			<Header text="Finance Dashboard" />
        		</div>
 	       	<div className="col-xs-8">
-	       		<Table data={transactions} />
+	       		<Table data={this.props.transactions} />
 	       	</div>
 	       	<div className="col-xs-4">
 	       		<Chart />
@@ -62,4 +43,18 @@ class Container extends Component {
   }
 };
 
-export default Container;
+const mapStateToProps = (state) => {
+  return {
+    transaction: state.transaction,
+    hasErrored: state.transactionHasErrored,
+    isLoading: state.transactionIsLoading
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchData: (url) => dispatch(transactionFetchData(url))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Container);

@@ -1,11 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
 
 import Container from './components/Container';
 
-ReactDOM.render(
+const store = configureStore();
+
+render(
+	<Provider store={store}>
   <div className="container">
     <Container />
-  </div>,
+  </div>
+  </Provider>,
   document.querySelectorAll('#rootElement')[0]
 );
