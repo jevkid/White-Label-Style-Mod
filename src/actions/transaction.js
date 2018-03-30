@@ -15,7 +15,7 @@ export function transactionIsLoading(bool) {
 export function transactionFetchDataSuccess(transaction) {
   return {
     type: 'TRANSACTION_FETCH_DATA_SUCCESS',
-    story
+    transaction
   };
 }
 

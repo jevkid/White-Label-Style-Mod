@@ -21,7 +21,7 @@ class Container extends Component {
       return <p>Sorry! There was an error loading transactions</p>;
     }
 
-    if (this.props.isLoading || this.props.transactions.length <= 0) {
+    if (this.props.isLoading || this.props.transaction.length <= 0) {
       return <p>Loading ...</p>;
     }
     
@@ -32,7 +32,7 @@ class Container extends Component {
        			<Header text="Finance Dashboard" />
        		</div>
 	       	<div className="col-xs-8">
-	       		<Table data={this.props.transactions} />
+	       		<Table data={this.props.transaction} />
 	       	</div>
 	       	<div className="col-xs-4">
 	       		<Chart />
