@@ -28,14 +28,14 @@ class Container extends Component {
     return (
       <div className="container">
        	<div className="row">
-       		<div className="col-xs-12">
-       			<Header text="Finance Dashboard" />
+       		<div className="col-12">
+       			<Header text="Finance Dashboard" />            
        		</div>
-	       	<div className="col-xs-8">
+	       	<div className="col-8">
 	       		<Table data={this.props.transaction} />
 	       	</div>
-	       	<div className="col-xs-4">
-	       		<Chart />
+	       	<div className="col-4">
+	       		<Chart data={[5,10,1,3]} size={[500,500]} />
 	       	</div>
        	</div>
       </div>

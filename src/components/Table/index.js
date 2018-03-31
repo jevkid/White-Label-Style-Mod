@@ -1,58 +1,27 @@
 import React, { Component } from 'react';
 
+import { connect } from 'react-redux';
+import { tableUpdateData } from '../../actions/table';
+
 class Table extends Component {
-	constructor(props) {
-    super(props);
 
-    this.state = {
-    	isLoading: false,
-    	error: null,
-    	tableData: this.props.data,
-      showPagination: true,
-      results: 10,
-      sort: 'desc',
-      sortBy: 'Date'
-    };
-  }
-	
-  updateTable(type, direction) {
-    fetch(`http://localhost:3000/transactions?_sort=${type}&_order=${direction}`)
-      .then(response => {
-      	if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Something went wrong ...');
-        }
-      })
-      .then(data => this.setState({ tableData: data, isLoading: false }))
-      .catch(error => this.setState({ error, isLoading: false }));
-	}
-
-	updateSort(e, type, direction) {
-		e.preventDefault();
-		this.setState({sort: direction, sortBy: type});
-		this.updateTable(type, direction);
-	}
-
-  render() {	
-  	const { tableData, isLoading, error } = this.state;
-
-  	const tableRow = tableData.map((row) => 
-  				<tr>
-				    <td key={row.Date}>{row.Date}</td>
-				    <td key={row['Debit/Credit']}>{row['Debit/Credit']}</td>
-				    <td key={row['Merchant/Description']}>{row['Merchant/Description']}</td>
-				    <td key={row.Balance}>{row.Balance}</td>
+  render() {
+    const table = this.props.tableData.length > 0 ? this.props.tableData : this.props.data;
+  	const tableRow = table.map((row, index) => 
+  				<tr key={index}>
+				    <td>{row.Date}</td>
+				    <td>{row['Debit/Credit']}</td>
+				    <td>{row['Merchant/Description']}</td>
+				    <td>{row.Balance}</td>
 				  </tr>
 		);
+    const direction = this.props.sort === 'desc' ? 'asc' : 'desc';
 
-		const direction = this.state.sort === 'desc' ? 'asc' : 'desc';
-
-		if (error) {
+		if (this.props.error) {
       return <p>{error.message}</p>;
     }
 
-    if (isLoading || tableData.length <= 0) {
+    if (this.props.isLoading || table.length <= 0) {
       return <p>Loading ...</p>;
     }
 
@@ -61,8 +30,8 @@ class Table extends Component {
       	<table>
       		<thead>
 	      		<tr>
-	      			<th><a href="#" onClick={(e) => this.updateSort(e, 'Date', direction)}>Date</a></th>
-	      			<th><a href="#" onClick={(e) => this.updateSort(e, 'Debit/Credit', direction)}>Amount</a></th>
+	      			<th><a href="#" onClick={() => this.props.updateData('Date', direction)}>Date</a></th>
+	      			<th><a href="#" onClick={() => this.props.updateData('Debit/Credit', direction)}>Amount</a></th>
 	      			<th>Description</th>
 	      			<th>Balance</th>
 	      		</tr>
@@ -76,4 +45,22 @@ class Table extends Component {
   }
 };
 
-export default Table;
+const mapStateToProps = (state) => {
+  return {
+    hasErrored: state.tableHasErrored,
+    isLoading: state.tableIsLoading,
+    tableData: state.tableData,
+    showPagination: state.tableShowPagination,
+    numResults: state.tableNumResults,
+    sort: state.tableSort,
+    sortBy: state.tableSortBy
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateData: (type, direction) => dispatch(tableUpdateData(type, direction))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
